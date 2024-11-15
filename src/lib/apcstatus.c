@@ -103,8 +103,13 @@ int output_status(UPSINFO *ups, int sockfd,
    if (ups->is_online())
       strlcat(status, "ONLINE ", sizeof(status));
 
-   if (ups->is_onbatt())
-      strlcat(status, "ONBATT ", sizeof(status));
+   if (ups->is_onbatt()){
+      if(ups->LineVoltage < 80){
+         strlcat(status, "ONBATT ", sizeof(status));
+      }else{
+         strlcat(status, "ONLINE ", sizeof(status));
+      }
+   }
 
    if (ups->is_overload())
       strlcat(status, "OVERLOAD ", sizeof(status));
