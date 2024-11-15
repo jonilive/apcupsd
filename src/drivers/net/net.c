@@ -361,7 +361,7 @@ bool NetUpsDriver::get_ups_status_flag(int fill)
     * consequtive pass here. While on batteries, this code
     * is called once per second.
     */
-   if (stat == 0 && _ups->is_onbatt()) {
+   if (stat == 0 && _ups->is_onbatt() && _ups->LineVoltage < 80) {
       if (_comm_loss++ == 4 && !_ups->is_shut_remote()) {
          _ups->set_shut_remote();
          log_event(_ups, LOG_ERR,

@@ -806,7 +806,7 @@ bool UsbUpsDriver::read_volatile_data()
     * MAX_VOLATILE_POLL_RATE seconds. This prevents flailing around
     * too much if the UPS state is rapidly changing while on mains.
     */
-   if (_ups->is_onbatt() && last_poll &&
+   if (_ups->is_onbatt() && _ups->LineVoltage < 80 && last_poll &&
        (now - last_poll < MAX_VOLATILE_POLL_RATE)) {
       return 1;
    }

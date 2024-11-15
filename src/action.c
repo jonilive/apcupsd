@@ -261,10 +261,15 @@ static enum a_state get_state(UPSINFO *ups, time_t now)
       } else if (ups->chg_onbatt()) {
          state = st_PowerFailure;  /* Power failure just detected */
       } else {
-         if (ups->SelfTest)        /* see if UPS is doing self test */
+         if (ups->SelfTest){        /* see if UPS is doing self test */
             state = st_SelfTest;   /*   yes */
-         else
-            state = st_OnBattery;  /* No, this must be real power failure */
+         }else{
+            if(ups->LineVoltage < 80){
+               state = st_OnBattery;  /* No, this must be real power failure */
+            }else{
+               state = st_OnMains;    /* Solid on mains, normal condition */
+            }
+         }
       }
    } else {
       if (ups->chg_onbatt())       /* if we were on batteries */

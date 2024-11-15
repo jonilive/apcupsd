@@ -277,7 +277,7 @@ int output_status(UPSINFO *ups, int sockfd,
       s_write(ups, "XONBATT  : %s\n", datetime);
    }
 
-   if (ups->is_onbatt() && ups->last_onbatt_time > 0)
+   if (ups->is_onbatt() && ups->LineVoltage < 80 && ups->last_onbatt_time > 0)
       time_on_batt = now - ups->last_onbatt_time;
    else
       time_on_batt = 0;
